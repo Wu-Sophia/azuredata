@@ -1,0 +1,19 @@
+{
+	"name": "Json0208_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "xiaolanBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "dbbackup"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

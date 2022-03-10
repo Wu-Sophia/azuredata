@@ -1,0 +1,68 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "HRemployee",
+						"type": "DatasetReference"
+					},
+					"name": "HREmployee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "HREMPLOYEEderived",
+						"type": "DatasetReference"
+					},
+					"name": "sinkToADBtEST"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumnHREmployee"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          BusinessEntityID as integer,",
+				"          NationalIDNumber as string,",
+				"          LoginID as string,",
+				"          OrganizationNode as binary,",
+				"          OrganizationLevel as integer,",
+				"          JobTitle as string,",
+				"          BirthDate as date,",
+				"          MaritalStatus as string,",
+				"          Gender as string,",
+				"          HireDate as date,",
+				"          SalariedFlag as boolean,",
+				"          VacationHours as integer,",
+				"          SickLeaveHours as integer,",
+				"          CurrentFlag as boolean,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> HREmployee",
+				"HREmployee derive(LoginID = LoginID,",
+				"          BirthDate = BirthDate,",
+				"          JobTitle = JobTitle) ~> DerivedColumnHREmployee",
+				"HREmployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkToADBtEST"
+			]
+		}
+	}
+}
