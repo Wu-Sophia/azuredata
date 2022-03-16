@@ -4,7 +4,8 @@
 		"description": "COPY From Azure storage_to \nAzure SQLDB_Xiaowu_db01",
 		"activities": [
 			{
-				"name": "Copy_sl8",
+				"name": "Copy_storageTOsqldb01",
+				"description": "from storage_sqldb_human... \nto\nAzure sql -xiaowu-db01",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
