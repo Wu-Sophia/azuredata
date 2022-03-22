@@ -1,0 +1,14 @@
+{
+	"name": "AzureDataLakeStore1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "adl://mcio-capacityutilization-prod-c11.azuredatalakestore.net",
+			"tenant": "33e01921-4d64-4f8c-a055-5bdaffd5e33d",
+			"subscriptionId": "",
+			"resourceGroupName": ""
+		}
+	}
+}

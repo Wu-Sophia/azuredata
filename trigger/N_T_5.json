@@ -1,0 +1,30 @@
+{
+	"name": "N_T_5",
+	"properties": {
+		"description": "New trigger 5",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "CopyUaeStorageBlobToCosmos_Backfill",
+				"type": "PipelineReference"
+			},
+			"parameters": {
+				"TriggerWindowEndTime": "@trigger().outputs.windowEndTime"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Hour",
+			"interval": 1,
+			"startTime": "2022-01-01T03:00:00Z",
+			"endTime": "2022-01-03T17:00:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 10,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": []
+		}
+	}
+}

@@ -1,0 +1,54 @@
+{
+	"name": "ds_cscpcdeusagetest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cscpcdeusagetest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"EntityName": {
+				"type": "string"
+			},
+			"EntityType": {
+				"type": "string"
+			},
+			"startTimeYear": {
+				"type": "string"
+			},
+			"startTimeMonth": {
+				"type": "string"
+			},
+			"startTimeDay": {
+				"type": "string"
+			},
+			"startTimeHour": {
+				"type": "string"
+			},
+			"OutputFolderPath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@if(equals(toUpper(dataset().EntityType),toUpper('Daily')), concat('Data_',dataset().startTimeYear,'_',dataset().startTimeMonth,'_',dataset().startTimeDay,'.parquet'), concat('Data_',dataset().startTimeYear,'_',dataset().startTimeMonth,'_',dataset().startTimeDay,'_',dataset().startTimeHour,'.parquet') )",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@if(equals(toUpper(dataset().EntityType),toUpper('Daily')), concat(dataset().EntityName,'/',dataset().startTimeYear,'/',dataset().startTimeMonth), concat(dataset().EntityName,'/',dataset().startTimeYear,'/',dataset().startTimeMonth,'/',dataset().startTimeDay,'/',dataset().startTimeHour) )",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().OutputFolderPath",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

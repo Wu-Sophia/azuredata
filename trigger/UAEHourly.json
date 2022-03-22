@@ -1,0 +1,30 @@
+{
+	"name": "UAEHourly",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyUaeStorageBlobToKusto",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "CopyUaeStorageBlobToCosmos",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2020-06-24T00:10:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

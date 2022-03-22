@@ -1,0 +1,11 @@
+{
+	"name": "ls_AsgardTestKeyVault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://AsgardTestKeyVault.vault.azure.net/"
+		}
+	}
+}

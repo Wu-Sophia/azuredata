@@ -1,0 +1,64 @@
+{
+	"name": "UaeBlobStorage",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "UAEStorageBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "mciooutput.json",
+				"folderPath": "data/sparkoutput/rireporting/DailyUtilization/sliceendtime=20200604000000",
+				"container": "mcio"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"UsageHour": {
+					"type": "string"
+				},
+				"SKU": {
+					"type": "string"
+				},
+				"ReservationOrderId": {
+					"type": "string"
+				},
+				"ReservationId": {
+					"type": "string"
+				},
+				"SubscriptionGuid": {
+					"type": "string"
+				},
+				"ResourceGuid": {
+					"type": "string"
+				},
+				"UtilizedQuantity": {
+					"type": "number"
+				},
+				"UniqueResourceId": {
+					"type": "string"
+				},
+				"InstanceName": {
+					"type": "string"
+				},
+				"Location": {
+					"type": "string"
+				},
+				"VMName": {
+					"type": "string"
+				},
+				"RIType": {
+					"type": "string"
+				},
+				"RICategory": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

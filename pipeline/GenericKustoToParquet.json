@@ -1,0 +1,122 @@
+{
+	"name": "GenericKustoToParquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEachKustoTableInJson",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@array(json(string(pipeline().parameters.KustoObjectJson)).KustoObjectList)",
+						"type": "Expression"
+					},
+					"batchCount": 10,
+					"activities": [
+						{
+							"name": "Data Reader Writer",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureDataExplorerSource",
+									"query": {
+										"value": "@item().Query",
+										"type": "Expression"
+									},
+									"queryTimeout": "01:00:00",
+									"noTruncation": true
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"validateDataConsistency": true,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "dsKustoDynamicTable",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().TableName",
+											"type": "Expression"
+										},
+										"DatabaseName": "@item().DatabaseName"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "dsKustoParquetWriter",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().TableName",
+											"type": "Expression"
+										},
+										"OutputFolderPath": {
+											"value": "@item().OutputFolderPath",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"KustoObjectJson": {
+				"type": "string",
+				"defaultValue": {
+					"KustoObjectList": [
+						{
+							"TableName": "AzureClusters",
+							"Query": "AzureClusters | project SeedDate,SourceSeedDateTime,ClusterName,Geo,Region,ClusterType,ClusterLiveDate,ClusterDecommissionDate,SkuName,DataCenter,PhysicalAvailabilityZone,AvailabilityZoneCode,IntentCode,IsIntentSellable,ClusterLIVEDateSource,IsVirtual,LastModifiedDateTime,ReservationId,Type,BuyingSubscriptionId,BuyingSubscriptionOfferId,EntitledScopes,State,ResourceProviderNamespace,Location,Quantity,StartDate,Term,EndDate,IsTestReservation,IsCapacityGuaranteed,ProcessedDateTime,Endpoint",
+							"DatabaseName": "Compute",
+							"ClusterURL": "https://mcipusage.westus.kusto.windows.net",
+							"OutputFolderPath": "filesystem/local/Staging",
+							"SparkDriverName": ""
+						},
+						{
+							"TableName": "AzureGraph",
+							"Query": "AzureGraph | project SeedDateTime,ContainerId,DeploymentId,SubscriptionId,ResourceProviderType,PlatformType,OSType,Size,Priority,AG_RegionId,ResourceName,ResourceGroupName,ArmId,RoleInstanceName,RoleNames,AvailabilitySetArmId,VMScaleSetId,NodeIdentity,Cluster,DataCenter,RegionName,RegionFriendlyName,endpoint,CloudCustomerGUID,OfferType,OfferName,IsFraudIdentified,FraudIdentifiedDate,ContainerType,BillingType",
+							"DatabaseName": "Compute",
+							"ClusterURL": "https://mcipusage.westus.kusto.windows.net",
+							"OutputFolderPath": "filesystem/local/Staging",
+							"SparkDriverName": ""
+						}
+					]
+				}
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-03-16T18:58:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

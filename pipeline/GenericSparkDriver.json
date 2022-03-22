@@ -1,0 +1,62 @@
+{
+	"name": "GenericSparkDriver",
+	"properties": {
+		"activities": [
+			{
+				"name": "InvokeSparkDriver",
+				"type": "HDInsightSpark",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"rootPath": {
+						"value": "@pipeline().parameters.storageContainer",
+						"type": "Expression"
+					},
+					"entryFilePath": {
+						"value": "@pipeline().parameters.DriverNameWithPath",
+						"type": "Expression"
+					},
+					"arguments": [
+						"@pipeline().parameters.startTime"
+					],
+					"sparkConfig": {
+						"spark.yarn.maxAppAttempts": "1",
+						"spark.yarn.appMasterEnv.PYSPARK3_PYTHON": "/usr/bin/anaconda/envs/dev3.7/bin/python",
+						"spark.yarn.appMasterEnv.PYSPARK_PYTHON": "/usr/bin/anaconda/envs/dev3.7/bin/python",
+						"spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON": "/usr/bin/anaconda/envs/dev3.7/bin/python",
+						"spark.driver.extraJavaOptions": "-Dlog4j.configuration=log4j.properties"
+					},
+					"sparkJobLinkedService": {
+						"referenceName": "ls_cscpcdeusagetest_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_asgardtesthdi",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"storageContainer": {
+				"type": "string"
+			},
+			"DriverNameWithPath": {
+				"type": "string"
+			},
+			"startTime": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-03-16T18:58:57Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

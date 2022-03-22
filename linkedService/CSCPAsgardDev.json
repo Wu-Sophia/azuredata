@@ -1,0 +1,19 @@
+{
+	"name": "CSCPAsgardDev",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://filesystem@cscpasgarddev.dfs.core.windows.net",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "cscpasgardkvprod",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "CSCPAsgardDevADLGen2StorageAccountKey"
+			}
+		}
+	}
+}

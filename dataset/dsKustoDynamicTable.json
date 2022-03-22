@@ -1,0 +1,27 @@
+{
+	"name": "dsKustoDynamicTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ds_MCIPUsageKusto",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			},
+			"DatabaseName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [],
+		"typeProperties": {
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,223 @@
+{
+	"name": "CSCPAsgardDevADLGen2_MSU_StorageForecast",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CSCPAsgardDev",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SeedDateTime": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "factstoragestfforecastdaily.parquet",
+				"folderPath": {
+					"value": "local/PublishedData/Adl.MCIO.MSCloudUtilization.Prod/factstoragestfforecastdaily/@{formatDateTime(if(equals(dataset().SeedDateTime,'default'),utcnow(),dataset().SeedDateTime),'yyyy/MM/dd')}",
+					"type": "Expression"
+				},
+				"fileSystem": "filesystem"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": [
+			{
+				"name": "MDSCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "Cluster",
+				"type": "UTF8"
+			},
+			{
+				"name": "GeoGroup",
+				"type": "UTF8"
+			},
+			{
+				"name": "GeographyCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "RegionCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "RegionAbbreviation",
+				"type": "UTF8"
+			},
+			{
+				"name": "AvailabilityZone",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterTypeGroup",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterType",
+				"type": "UTF8"
+			},
+			{
+				"name": "ParentCluster",
+				"type": "UTF8"
+			},
+			{
+				"name": "CapacityDate",
+				"type": "DATE"
+			},
+			{
+				"name": "SellableCapacityUnit",
+				"type": "UTF8"
+			},
+			{
+				"name": "AdjustedPercentage",
+				"type": "UTF8"
+			},
+			{
+				"name": "SellableCapacity",
+				"type": "UTF8"
+			},
+			{
+				"name": "UnadjustedSellableCapacity",
+				"type": "UTF8"
+			},
+			{
+				"name": "SKUName",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterDockDate",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterRTODate",
+				"type": "DATE"
+			},
+			{
+				"name": "ClusterRTWDate",
+				"type": "DATE"
+			},
+			{
+				"name": "ClusterLIVEDate",
+				"type": "DATE"
+			},
+			{
+				"name": "ClusterExpectedRTWDate",
+				"type": "DATE"
+			},
+			{
+				"name": "ClusterDecommissionPlanCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterMilestone",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterDecommissionDate",
+				"type": "DATE"
+			},
+			{
+				"name": "ClusterIsDecommissioned",
+				"type": "UTF8"
+			},
+			{
+				"name": "DataCenterCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "DataCenterAbbreviation",
+				"type": "UTF8"
+			},
+			{
+				"name": "DataCenterName",
+				"type": "UTF8"
+			},
+			{
+				"name": "IntentCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "IntentIsSellable",
+				"type": "UTF8"
+			},
+			{
+				"name": "SC_PONumber",
+				"type": "UTF8"
+			},
+			{
+				"name": "PurchaseDate",
+				"type": "DATE"
+			},
+			{
+				"name": "ServerCount",
+				"type": "UTF8"
+			},
+			{
+				"name": "IsIntentSellable",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterLIVEDateSource",
+				"type": "UTF8"
+			},
+			{
+				"name": "Live_AvailabilityZone",
+				"type": "UTF8"
+			},
+			{
+				"name": "ClusterActualDockDate",
+				"type": "DATE"
+			},
+			{
+				"name": "SC_OEM",
+				"type": "UTF8"
+			},
+			{
+				"name": "Plan_TAMAwardDate",
+				"type": "DATE"
+			},
+			{
+				"name": "Plan_CapexApprovalMonth",
+				"type": "DATE"
+			},
+			{
+				"name": "FinalReservationStatus",
+				"type": "UTF8"
+			},
+			{
+				"name": "Plan_DockDate",
+				"type": "DATE"
+			},
+			{
+				"name": "Plan_CoordinatedDockDate",
+				"type": "DATE"
+			},
+			{
+				"name": "RAWCapacity",
+				"type": "UTF8"
+			},
+			{
+				"name": "RAWCapacityUnit",
+				"type": "UTF8"
+			},
+			{
+				"name": "NumRacks",
+				"type": "UTF8"
+			},
+			{
+				"name": "RAWCapacityPerRack",
+				"type": "UTF8"
+			},
+			{
+				"name": "ExtractDT",
+				"type": "INT96"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,62 @@
+{
+	"name": "Df_Compute_Storage_Forecast_Trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Factazurecomputestfconsolidatedforecastdailyv5cparquet",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SeedDateTime": "default"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "factstoragestfforecastdaily",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SeedDateTime": "default"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "kusto_Factazurecomputestfconsolidatedforecastdailyv5cparquet",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SeedDateTime": "default"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "kusto_factstoragestfforecastdaily",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SeedDateTime": "default"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2021-02-10T00:00:00Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						15
+					]
+				}
+			}
+		}
+	}
+}

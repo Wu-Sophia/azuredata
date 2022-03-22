@@ -1,0 +1,13 @@
+{
+	"name": "ls_cscpcdeusagetest",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "https://cscpcdeusagetest.blob.core.windows.net/filesystem",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://cscpcdeusagetest.blob.core.windows.net",
+			"accountKind": "StorageV2"
+		}
+	}
+}

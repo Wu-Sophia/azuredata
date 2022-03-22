@@ -1,0 +1,16 @@
+{
+	"name": "kusto_factazurecomputestfconsolidatedforecastdailyv5cparquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ds_MCIPUsageKusto",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "Factazurecomputestfconsolidatedforecastdailyv5cparquet"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

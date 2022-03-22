@@ -1,0 +1,531 @@
+{
+	"name": "Factazurecomputestfconsolidatedforecastdailyv5cparquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_ComputeForecast_Data",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "stf/unconstrained/factazurecomputestfconsolidatedforecastdailyv53/@{formatDateTime(if(equals(pipeline().parameters.SeedDateTime,'default'),utcnow(),pipeline().parameters.SeedDateTime),'yyyy/MM/dd')}",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ForecastDate",
+									"type": "DateTime",
+									"physicalType": "DATE"
+								},
+								"sink": {
+									"name": "ForecastDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "Forecast",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Forecast",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfGeo",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfGeo",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfRegion",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfRegion",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfResourceSKU",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfResourceSKU",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfComputeGroupType",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfComputeGroupType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfUsageType",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfUsageType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfAZDeploymentType",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfAZDeploymentType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfAZCode",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfAZCode",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfBLORSegment",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfBLORSegment",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfSubscriptionType",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfSubscriptionType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Horizon",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "Horizon",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "PivotDate",
+									"type": "DateTime",
+									"physicalType": "DATE"
+								},
+								"sink": {
+									"name": "PivotDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "Model",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Model",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "AlgDetails",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "AlgDetails",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Q5",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q5",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Q50",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q50",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Q66",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q66",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Q75",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q75",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Q90",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q90",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Q95",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q95",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Q99",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Q99",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Ratio",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Ratio",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Variance",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Variance",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Variance^2",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								},
+								"sink": {
+									"name": "Variance^2",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfUnit",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfUnit",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "DateTimeOfPrediction",
+									"type": "DateTime",
+									"physicalType": "DATE"
+								},
+								"sink": {
+									"name": "DateTimeOfPrediction",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "BacklogSnapshotDateTime",
+									"type": "DateTime",
+									"physicalType": "DATE"
+								},
+								"sink": {
+									"name": "BacklogSnapshotDateTime",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfQuotaApprovalStatus",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfQuotaApprovalStatus",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfForecastConstraintType",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfForecastConstraintType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CsdfBacklogCategory",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CsdfBacklogCategory",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSDF_ADLGen2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSCPAsgardDevADLGen2_MSU_ComputeForecast",
+						"type": "DatasetReference",
+						"parameters": {
+							"SeedDateTime": {
+								"value": "@pipeline().parameters.SeedDateTime",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "IcmNotification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy_ComputeForecast_Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().globalParameters.ICMFunctionsAppUrl",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\n\t\"PipelineResult\": false,\n\t\"PipelineName\": \"Factazurecomputetestfconsolidatedforecastdailyv5cparquet\",\n\t\"ErrorMessage\": \"@{concat('<p>&nbsp;</p><p><b>Error</b></p>', activity('Copy_ComputeForecast_Data').error.message, '<p>&nbsp;</p><p>Click <a href=', concat('https://ms-adf.azure.com/monitoring/pipelineruns/', pipeline().RunId, '?factory=%2Fsubscriptions%2F3747c610-b764-498e-8aa3-961808d7241a%2FresourceGroups%2FDEFAULT_RG%2Fproviders%2FMicrosoft.DataFactory%2Ffactories%2FUsageDataFactory-AME'), '>here</a> for pipeline execution details</p>')}\",\n\t\"RunUrl\": \"@{concat('https://ms-adf.azure.com/monitoring/pipelineruns/', pipeline().RunId, '?factory=%2Fsubscriptions%2F3747c610-b764-498e-8aa3-961808d7241a%2FresourceGroups%2FDEFAULT_RG%2Fproviders%2FMicrosoft.DataFactory%2Ffactories%2FUsageDataFactory-AME')}\",\n\t\"FailureCount\": 1,\n\t\"IcmThresholdCount\": 1,\n\t\"Severity\": 3,\n\t\"RoutingId\": \"CSCP-Usage-DataPlatform\"\n}",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": {
+							"value": "@pipeline().globalParameters.AuthenticatorResourceUrl",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Resolve Icm",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy_ComputeForecast_Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().globalParameters.ICMFunctionsAppUrl",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\n\t\"PipelineResult\": true,\n\t\"PipelineName\": \"Factazurecomputetestfconsolidatedforecastdailyv5cparquet\",\n\t\"ErrorMessage\": \"\",\n\t\"RunUrl\": \"\",\n\t\"FailureCount\": 1,\n\t\"IcmThresholdCount\": 1,\n\t\"Severity\": 3,\n\t\"RoutingId\": \"CSCP-Usage-DataPlatform\"\n}",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": {
+							"value": "@pipeline().globalParameters.AuthenticatorResourceUrl",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"SeedDateTime": {
+				"type": "string",
+				"defaultValue": "default"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-03-16T18:58:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

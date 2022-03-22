@@ -1,0 +1,209 @@
+{
+	"name": "StorageUsageGen1ToGen2",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyPublishedParquetFiles-cscpcdeusagetest_copy1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "C11CapacityUtilizationParquets",
+						"type": "DatasetReference",
+						"parameters": {
+							"EntityName": {
+								"value": "@pipeline().parameters.EntityName",
+								"type": "Expression"
+							},
+							"EntityType": {
+								"value": "@pipeline().parameters.EntityType",
+								"type": "Expression"
+							},
+							"startTimeYear": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'yyyy')",
+								"type": "Expression"
+							},
+							"startTimeMonth": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'MM')",
+								"type": "Expression"
+							},
+							"startTimeDay": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'dd')",
+								"type": "Expression"
+							},
+							"startTimeHour": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'HH')",
+								"type": "Expression"
+							},
+							"inputPath": {
+								"value": "@pipeline().parameters.InputPath",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_cscpasgarddev",
+						"type": "DatasetReference",
+						"parameters": {
+							"EntityName": {
+								"value": "@pipeline().parameters.EntityName",
+								"type": "Expression"
+							},
+							"EntityType": {
+								"value": "@pipeline().parameters.EntityType",
+								"type": "Expression"
+							},
+							"startTimeYear": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'yyyy')",
+								"type": "Expression"
+							},
+							"startTimeMonth": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'MM')",
+								"type": "Expression"
+							},
+							"startTimeDay": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'dd')",
+								"type": "Expression"
+							},
+							"startTimeHour": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'HH')",
+								"type": "Expression"
+							},
+							"OutputFolderPath": {
+								"value": "@pipeline().parameters.OutputFolderPath",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "CopyPublishedParquetFiles-Prod_copy1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "C11CapacityUtilizationParquets",
+						"type": "DatasetReference",
+						"parameters": {
+							"EntityName": "@pipeline().parameters.EntityName",
+							"EntityType": "@pipeline().parameters.EntityType",
+							"startTimeYear": "@formatDateTime(pipeline().parameters.startTime,'yyyy')",
+							"startTimeMonth": "@formatDateTime(pipeline().parameters.startTime,'MM')",
+							"startTimeDay": "@formatDateTime(pipeline().parameters.startTime,'dd')",
+							"startTimeHour": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'HH')",
+								"type": "Expression"
+							},
+							"inputPath": {
+								"value": "@pipeline().parameters.InputPath",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_cscpcdeusageprod",
+						"type": "DatasetReference",
+						"parameters": {
+							"EntityName": "@pipeline().parameters.EntityName",
+							"EntityType": "@pipeline().parameters.EntityType",
+							"startTimeYear": "@formatDateTime(pipeline().parameters.startTime,'yyyy')",
+							"startTimeMonth": "@formatDateTime(pipeline().parameters.startTime,'MM')",
+							"startTimeDay": "@formatDateTime(pipeline().parameters.startTime,'dd')",
+							"startTimeHour": {
+								"value": "@formatDateTime(pipeline().parameters.startTime,'HH')",
+								"type": "Expression"
+							},
+							"OutputFolderPath": "@pipeline().parameters.OutputFolderPath"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"EntityName": {
+				"type": "string"
+			},
+			"EntityType": {
+				"type": "string"
+			},
+			"startTime": {
+				"type": "string"
+			},
+			"InputPath": {
+				"type": "string"
+			},
+			"OutputFolderPath": {
+				"type": "string"
+			},
+			"TargetEnvironment": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-03-16T18:58:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

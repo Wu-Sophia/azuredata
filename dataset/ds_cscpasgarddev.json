@@ -1,0 +1,54 @@
+{
+	"name": "ds_cscpasgarddev",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CSCPAsgardDev",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"EntityName": {
+				"type": "string"
+			},
+			"EntityType": {
+				"type": "string"
+			},
+			"startTimeYear": {
+				"type": "string"
+			},
+			"startTimeMonth": {
+				"type": "string"
+			},
+			"startTimeDay": {
+				"type": "string"
+			},
+			"startTimeHour": {
+				"type": "string"
+			},
+			"OutputFolderPath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@if(equals(toUpper(dataset().EntityType),toUpper('Hourly'))\n\t,concat('Data_',dataset().startTimeYear,'_',dataset().startTimeMonth,'_',dataset().startTimeDay,'_',dataset().startTimeHour,'.parquet')\n\t,if(equals(toUpper(dataset().EntityType),toUpper('HourlyNew'))\n\t\t,concat(dataset().startTimeYear,dataset().startTimeMonth,dataset().startTimeDay,dataset().startTimeHour,'_',dataset().EntityName,'.parquet')\n\t\t, concat('Data_',dataset().startTimeYear,'_',dataset().startTimeMonth,'_',dataset().startTimeDay,'.parquet')\n\t\t\t)\n)",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@if(equals(toUpper(dataset().EntityType),toUpper('Hourly'))\t,concat(dataset().EntityName,'/',dataset().startTimeYear,'/',dataset().startTimeMonth,'/',dataset().startTimeDay,'/',dataset().startTimeHour)\n\t,if(equals(toUpper(dataset().EntityType),toUpper('HourlyNew'))\n\t\t,concat(dataset().EntityName,'/',dataset().startTimeYear,'/',dataset().startTimeMonth,'/',dataset().startTimeDay)\n\t\t,if(equals(toUpper(dataset().EntityType),toUpper('Daily'))\n\t\t\t,concat(dataset().EntityName,'/',dataset().startTimeYear,'/',dataset().startTimeMonth)\n\t\t\t,concat(dataset().EntityName,'/',dataset().startTimeYear,'/',dataset().startTimeMonth,'/',dataset().startTimeDay)\n\t\t\t)\n\t\t)\n)",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().OutputFolderPath",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

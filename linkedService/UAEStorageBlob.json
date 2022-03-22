@@ -1,0 +1,11 @@
+{
+	"name": "UAEStorageBlob",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"sasUri": "https://projecttest4989549766.vault.azure.net/"
+		}
+	}
+}

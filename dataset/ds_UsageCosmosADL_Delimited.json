@@ -1,0 +1,30 @@
+{
+	"name": "ds_UsageCosmosADL_Delimited",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": {
+					"value": "Data_@{formatDateTime(addHours(pipeline().TriggerTime,-1),'yyyyMMddHH')}.tsv",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "local/PublishedData/Microsoft.Cloud.MCIO/StorageBlobIngested/UAESourceData/@{formatDateTime(addHours(pipeline().TriggerTime,-1),'yyyy')}/@{formatDateTime(addHours(pipeline().TriggerTime,-1),'MM')}/@{formatDateTime(addHours(pipeline().TriggerTime,-1),'dd')}",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": ""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

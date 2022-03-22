@@ -1,0 +1,283 @@
+{
+	"name": "CopyUaeStorageBlobToCosmos_Backfill",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"additionalColumns": [
+							{
+								"name": "SeedDateTime",
+								"value": {
+									"value": "@{formatDateTime(addHours(pipeline().TriggerTime,-1),'yyyy-MM-dd HH:00:00')}",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "data/sparkoutput/rireporting/DailyUtilization/sliceendtime=@{formatDateTime(addHours(pipeline().parameters.TriggerWindowEndTime,0),'yyyyMMddHH0000')}",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*.json"
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['UsageHour']"
+								},
+								"sink": {
+									"name": "UsageHour",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['SKU']"
+								},
+								"sink": {
+									"name": "SKU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ReservationOrderId']"
+								},
+								"sink": {
+									"name": "ReservationOrderId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ReservationId']"
+								},
+								"sink": {
+									"name": "ReservationId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['SubscriptionGuid']"
+								},
+								"sink": {
+									"name": "SubscriptionGuid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ResourceGuid']"
+								},
+								"sink": {
+									"name": "ResourceGuid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['UtilizedQuantity']"
+								},
+								"sink": {
+									"name": "UtilizedQuantity",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "$['InstanceName']"
+								},
+								"sink": {
+									"name": "InstanceName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Location']"
+								},
+								"sink": {
+									"name": "Location",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['VMName']"
+								},
+								"sink": {
+									"name": "VMName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['RIType']"
+								},
+								"sink": {
+									"name": "RIType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['RICategory']"
+								},
+								"sink": {
+									"name": "RICategory",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['SeedDateTime']"
+								},
+								"sink": {
+									"name": "SeedDateTime",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "UaeBlobStorage",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_UsageCosmosADL_Delimited_Backfill",
+						"type": "DatasetReference",
+						"parameters": {
+							"Ds_WindowsEndTime": {
+								"value": "@pipeline().parameters.TriggerWindowEndTime",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "IcmNotification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().globalParameters.ICMFunctionsAppUrl",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\n\t\"PipelineResult\": false,\n\t\"PipelineName\": \"CopyUaeStorageBlobToCosmos\",\n\t\"ErrorMessage\": \"@{concat('<p>&nbsp;</p><p><b>Error</b></p>', activity('Copy data').error.message, '<p>&nbsp;</p><p>Click <a href=', concat('https://ms-adf.azure.com/monitoring/pipelineruns/', pipeline().RunId, '?factory=%2Fsubscriptions%2F3747c610-b764-498e-8aa3-961808d7241a%2FresourceGroups%2FDEFAULT_RG%2Fproviders%2FMicrosoft.DataFactory%2Ffactories%2FUsageDataFactory-AME'), '>here</a> for pipeline execution details</p>')}\",\n\t\"RunUrl\": \"@{concat('https://ms-adf.azure.com/monitoring/pipelineruns/', pipeline().RunId, '?factory=%2Fsubscriptions%2F3747c610-b764-498e-8aa3-961808d7241a%2FresourceGroups%2FDEFAULT_RG%2Fproviders%2FMicrosoft.DataFactory%2Ffactories%2FUsageDataFactory-AME')}\",\n\t\"FailureCount\": 1,\n\t\"IcmThresholdCount\": 1,\n\t\"Severity\": 3,\n\t\"RoutingId\": \"CSCP-Usage-DataPlatform\"\n}",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": {
+							"value": "@pipeline().globalParameters.AuthenticatorResourceUrl",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Resolve Icm",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().globalParameters.ICMFunctionsAppUrl",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\n\t\"PipelineResult\": true,\n\t\"PipelineName\": \"CopyUaeStorageBlobToCosmos\",\n\t\"ErrorMessage\": \"\",\n\t\"RunUrl\": \"\",\n\t\"FailureCount\": 1,\n\t\"IcmThresholdCount\": 1,\n\t\"Severity\": 3,\n\t\"RoutingId\": \"CSCP-Usage-DataPlatform\"\n}",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": {
+							"value": "@pipeline().globalParameters.AuthenticatorResourceUrl",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"TriggerWindowEndTime": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-03-16T18:59:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

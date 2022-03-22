@@ -1,0 +1,25 @@
+{
+	"name": "ls_asgardtesthdi",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HDInsight",
+		"typeProperties": {
+			"clusterUri": "https://Asgard-Test-HDI-Cluster.azurehdinsight.net",
+			"userName": "admin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_AsgardTestKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "ClusterLogin-Asgard-Test"
+			},
+			"isEspEnabled": false,
+			"linkedServiceName": {
+				"referenceName": "ls_cscpcdeusagetest_blob",
+				"type": "LinkedServiceReference"
+			}
+		}
+	}
+}

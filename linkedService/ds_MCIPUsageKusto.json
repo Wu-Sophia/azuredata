@@ -1,0 +1,12 @@
+{
+	"name": "ds_MCIPUsageKusto",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataExplorer",
+		"typeProperties": {
+			"endpoint": "https://mcipusage.kusto.windows.net",
+			"database": "Compute"
+		}
+	}
+}

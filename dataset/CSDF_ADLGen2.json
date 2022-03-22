@@ -1,0 +1,145 @@
+{
+	"name": "CSDF_ADLGen2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CSDF_ADLGen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "published"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "ForecastDate",
+				"type": "DATE"
+			},
+			{
+				"name": "Forecast",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "CsdfGeo",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfRegion",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfVMFamily",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfComputeGroupType",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfUsageType",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfAZDeploymentType",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfAZCode",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfBLORSegment",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfSubscriptionType",
+				"type": "UTF8"
+			},
+			{
+				"name": "Horizon",
+				"type": "INT32"
+			},
+			{
+				"name": "PivotDate",
+				"type": "DATE"
+			},
+			{
+				"name": "Model",
+				"type": "UTF8"
+			},
+			{
+				"name": "AlgDetails",
+				"type": "UTF8"
+			},
+			{
+				"name": "Q5",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Q50",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Q66",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Q75",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Q90",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Q95",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Q99",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Ratio",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Variance",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Variance^2",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "CsdfUnit",
+				"type": "UTF8"
+			},
+			{
+				"name": "DateTimeOfPrediction",
+				"type": "DATE"
+			},
+			{
+				"name": "BacklogSnapshotDateTime",
+				"type": "DATE"
+			},
+			{
+				"name": "CsdfQuotaApprovalStatus",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfForecastConstraintType",
+				"type": "UTF8"
+			},
+			{
+				"name": "CsdfBacklogCategory",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

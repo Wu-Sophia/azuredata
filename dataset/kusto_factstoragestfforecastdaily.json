@@ -1,0 +1,16 @@
+{
+	"name": "kusto_factstoragestfforecastdaily",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ds_MCIPUsageKusto",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "Factstoragestfforecastdaily"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,16 @@
+{
+	"name": "ds_MCIPUsage_Compute",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ds_MCIPUsageKusto",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "UAESourceData"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,11 @@
+{
+	"name": "cscpasgardkvprod",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://cscpasgardkvprod.vault.azure.net/"
+		}
+	}
+}
